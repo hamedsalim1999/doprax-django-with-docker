@@ -1,0 +1,44 @@
+
+{% extends 'share/temp.html' %}
+{% block body %}
+{% load static %}
+
+<body>
+{% if not cart_item %}
+  <h1>no cart</h1>
+  {% else %}
+  <h1> your cart is :</h1>
+  {% for cart in cart_item %}
+    <tr>
+        <td>
+            {{cart_item.name}}
+        </td>
+        <td>
+            {{cart_item.product.sku}}
+        </td>
+        <td>
+            {{cart_item.product.sku}}
+        </td>
+        <td>
+            {{cart_item.quantity}} x {{cart_item.product.price}}
+        </td>
+        <td>
+            {{cart_item.sub_total}}
+        </td>
+        {% if cart_item.quantity  < cart_item.product.stock %}
+          <td>
+              <a href="{% url 'cart:add_cart' cart_item.product.sku %}"> add </a>
+                <a href="{% url 'cart:add_cart' cart_item.product.sku %}"> circle</a>
+                <a href="{% url 'cart:add_cart' cart_item.product.sku %}"></a>
+            </td>
+            {% else%}
+            <td>
+                <a href="{% url 'shop:allproduct'  %}"></a>
+            </td>
+        {% endif %}
+    </tr>
+  {% endfor %}
+{% endif %}
+
+  
+{% endblock  %}

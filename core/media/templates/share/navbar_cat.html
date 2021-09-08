@@ -1,0 +1,17 @@
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="./blog" id="navbarDropdown_1"
+        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Category
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
+        {% for cat  in category %}
+          
+        <a class="dropdown-item" href="{% url 'blog:category' cat.slug %}" class="d-flex">
+            {{cat.title}}
+
+        </a>
+        
+        {% endfor %}
+        
+    </div>
+</li>

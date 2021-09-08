@@ -1,0 +1,118 @@
+ {% extends 'share/temp.html' %} {% block body %} {% load static %}
+
+<!-- ================ contact section start ================= -->
+<section class="contact-section padding_top">
+    <div class="container">
+        <div class="d-none d-sm-block mb-5 pb-4">
+
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <h2 class="contact-title">Get in Touch</h2>
+            </div>
+            <div class="col-lg-8">
+             
+                <form class="form-contact contact_form" method="post" id="contactForm"
+                novalidate="novalidate" >
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+    
+                      <textarea class="form-control w-100" name="body" id="body" cols="30" rows="9"
+                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'"
+                        placeholder='Enter Message'></textarea>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input class="form-control" name="name" id="name" type="text" onfocus="this.placeholder = ''"
+                        onblur="this.placeholder = 'Enter your name'" placeholder='Enter your name'>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input class="form-control" name="email" id="email" type="email" onfocus="this.placeholder = ''"
+                        onblur="this.placeholder = 'Enter email address'" placeholder='Enter email address'>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <input class="form-control" name="title" id="title" type="text" onfocus="this.placeholder = ''"
+                        onblur="this.placeholder = 'Enter Subject'" placeholder='Enter Subject'>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group mt-3">
+                  <button id='send-button' class="btn_3 button-contactForm" type="submit">Send Message</button>
+                </div>
+              </div>
+            </form>
+            <div class="col-lg-4">
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-home"></i></span>
+                    <div class="media-body">
+                        <h3>Buttonwood, California.</h3>
+                        <p>Rosemead, CA 91770</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+                    <div class="media-body">
+                        <h3>00 (440) 9865 562</h3>
+                        <p>Mon to Fri 9am to 6pm</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-email"></i></span>
+                    <div class="media-body">
+                        <h3>support@colorlib.com</h3>
+                        <p>Send us your query anytime!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ================ contact section end ================= -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $('#send-button').click(function() {
+        var formData = {
+          
+            'name': $('#name').val(),
+            'email': $('#email').val(),
+            'body': $('#body').val(),
+            'title': $('#title').val(),
+            csrfmiddlewaretoken: window.CSRF_TOKEN
+        };
+   
+        // process the form
+        $.ajax({
+                type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                url: 'http://127.0.0.1:8000/api/v1/contact/', // the url where we want to POST
+                data: formData, // our data object
+                dataType: 'json', // what type of data do we expect back from the server
+                encode: true,
+                complete: function () {
+                },
+                success: function (msg) {                    
+                   alert("YOUR SUCCESS MESSAGE HERE");
+                   document.getElementById("contactForm").reset()
+
+                },
+                error: function (msg) {
+           
+                    alert("Error " + msg.d.toString());
+                }
+            })
+          
+
+                });
+</script>
+
+
+{% endblock %}

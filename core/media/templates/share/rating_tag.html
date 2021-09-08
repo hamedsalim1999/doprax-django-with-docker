@@ -1,0 +1,20 @@
+{% load static %}
+<div class="row">
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+    <div class="col text-center">
+        <form class="rate-form" action="" method="POST" id="{{object.id}}">
+            {% csrf_token %}
+            <button type="submit" class="fa fa-star fa-3x my-btn" id="first"></button>
+            <button type="submit" class="fa fa-star fa-3x my-btn" id="second"></button>
+            <button type="submit" class="fa fa-star fa-3x my-btn" id="third"></button>
+            <button type="submit" class="fa fa-star fa-3x my-btn" id="fourth"></button>
+            <button type="submit" class="fa fa-star fa-3x my-btn" id="fifth"></button>
+        </form>
+        <br>
+        <div id="confirm-box"></div>
+    </div>
+    
+</div>
+<script src="{% static 'js/rating.js'%}"></script>

@@ -1,0 +1,13 @@
+<form method="GET">
+    {{filter.form}}
+    <button type="submit" class="btn">submit</button>
+
+</form>
+
+<ul>
+    {% for  result in filter.qs %}
+      <li>
+          <a href="#"> {{result}}</a>
+      </li>
+    {% endfor %}
+</ul>

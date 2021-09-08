@@ -1,0 +1,140 @@
+{% extends 'share/temp.html' %}
+{% load post_tag %}
+{% load static %}
+{% block body %}
+
+
+<!--================Blog Area =================-->
+<section class="blog_area padding_top">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-5 mb-lg-0">
+                <div class="blog_left_sidebar">
+                    {% for blog in blog_list  %}
+                    <article class="blog_item">
+                        <div class="blog_item_img">
+                            {% if blog.image %}
+                            <img class="card-img rounded-0" src="{{blog.image.url}}" alt="">
+                            {% endif %}
+                            <a href="./{{blog.slug}}" class="blog_item_date">
+                                <h3>{{blog.create|date:"j"}}</h3>
+                                <p>{{blog.create|date:"F"}}</p>
+                            </a>
+                        </div>
+
+                        <div class="blog_details">
+                            <a class="d-inline-block" href="./{{blog.slug}}">
+                                <h2>{{blog.title}}</h2>
+                            </a>
+                            <p>{{blog.summary | safe}} ....</p>
+                            <ul class="blog-info-link">
+                                <li><a href="#"><i class="far fa-user"></i> {{blog.category_list}}</a></li>
+                                <li><h1 href="#"><i class="far fa-comments"></i> {{blog.hits.count}}</h1></li>
+                            </ul>
+                        </div>
+                    </article>
+                    {% endfor %}
+
+
+                    <nav class="blog-pagination justify-content-center d-flex">
+
+                        {% if is_paginated %}
+                        <ul class="pagination">
+                          {% if page_obj.has_previous %}
+                            <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                          {% else %}
+                            <li class="disabled"><span>&laquo;</span></li>
+                          {% endif %}
+                          {% for i in paginator.page_range %}
+                            {% if page_obj.number == i %}
+                              <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                            {% else %}
+                              <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                          {% endfor %}
+                          {% if page_obj.has_next %}
+                            <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                          {% else %}
+                            <li class="disabled"><span>&raquo;</span></li>
+                          {% endif %}
+                        </ul>
+                      {% endif %}
+                        
+                    </nav>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                    
+
+                    <aside class="single_sidebar_widget post_category_widget">
+                        <h4 class="widget_title">Category</h4>
+                        <ul class="list cat-list">
+
+                            {% for categoryList  in category  %}
+                            <li>
+                                <a href="{% url 'blog:category' categoryList.slug %}" class="d-flex">
+                                    <p>{{categoryList.title}}</p>
+
+                                </a>
+                            </li>
+
+                            {% endfor %}
+                        </ul>
+                    </aside>
+
+                   {% recent_post%}
+                  {%tag_clouds%}
+
+
+                    <aside class="single_sidebar_widget instagram_feeds">
+                        <h4 class="widget_title">Instagram Feeds</h4>
+                        <ul class="instagram_row flex-wrap">
+                            <li>
+                                <a href="#">
+                                    <img class="img-fluid" src="" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img class="img-fluid" src="" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img class="img-fluid" src="" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img class="img-fluid" src="" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img class="img-fluid" src="" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img class="img-fluid" src="" alt="">
+                                </a>
+                            </li>
+                        </ul>
+                    </aside>
+
+
+                    <aside class="single_sidebar_widget newsletter_widget">
+                        <h4 class="widget_title">Newsletter</h4>
+                        {%search%}
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================Blog Area =================-->
+
+{% endblock body %}
+
+</html>

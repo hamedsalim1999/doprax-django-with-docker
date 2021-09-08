@@ -1,0 +1,23 @@
+
+{% extends 'share/temp.html' %}
+{% block body %}
+{% load static %}
+
+<body>
+    <!--::header part start::-->
+   
+    <!-- Header part end-->
+
+    <!-- banner part start-->
+    <section class="banner_part">
+        {% for message in messages %}
+        <li>{{message}}</li>
+     {% endfor %}
+    </section>
+    <!--::subscribe_area part end::-->
+
+    <!--::footer_part end::-->
+
+
+  
+{% endblock  %}

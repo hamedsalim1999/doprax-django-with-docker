@@ -1,0 +1,151 @@
+
+{% extends 'share/temp.html' %}
+{% block body %}
+{% load static %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-lg-offset-0">
+
+
+            <div class="menu">
+
+            </div>
+
+            <div class="pageTitle">
+                {{ thread.title }}
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <a href="{% url 'index' %}" class="btn btn-default btn-sm">
+                        <i class="glyphicon glyphicon-arrow-left"></i> Back to Threads
+                    </a>
+                </div>
+            </div>
+
+            <div class="row pad">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <p class="big">Thread: {{ thread.title }}</p>
+                                </div>
+                                <div class="col-lg-12">
+                                    {{ thread.description }}
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <br />
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                    {{ thread.date_created }} &nbsp;
+                                    <a href="#_reply">
+                                        <i class="glyphicon glyphicon-comment"></i> Post Reply</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="">Replies &mdash; ({{ thread.reply_set.count }} total)</h3>
+            {% for reply in replay %}
+            <div class="panel panel-primary reply" id="r1" style="border-radius: 10px;">
+                <div class="panel-body">
+                    <div class="row reply">
+                        <div class="col-lg-9">
+                            <div class="reply-msg">
+                                {{ reply.message }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="reply-details">
+                                <i class="glyphicon glyphicon-calendar"></i> {{ reply.date_created }} &nbsp;
+                                <br />
+                                <i class="glyphicon glyphicon-user"></i> {{ reply.user.username }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if user.is_authenticated %}
+            <div class="row pad">
+                <div class="col-lg-12 pad">
+                    <div class="panel panel-primary">
+                        <!-- <div class="panel-heading big">
+                                        <i class="glyphicon glyphicon-comment"></i> Post Reply
+                                    </div> -->
+                        <div class="panel-body pad" id="_reply">
+                            <form class="form-contact contact_form" method="post" id="contactForm"
+                            novalidate="novalidate" >
+                            {% csrf_token %}
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="form-group">
+                
+                                  <textarea class="form-control w-100" name="body" id="body" cols="30" rows="9"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'"
+                                    placeholder='Enter Message'>
+                                </textarea>
+                            <div class="form-group mt-3">
+                              <button id='send-button' class="btn_3 button-contactForm" type="button">Send Message</button>
+                            </div>
+                          </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+
+            <footer>
+                <div class="row">
+                    <div class="col-lg-12">
+
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $('#send-button').click(function () {
+        var formData = {
+            "thread": "{{thread.sku}}",
+            "user": "{{user.id}}",
+            'message': $('#body').val(),
+
+        };
+
+        // process the form
+        $.ajax({
+            type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+            url: 'http://127.0.0.1:8000/forum/api/v1/reply/', // the url where we want to POST
+            data: formData, // our data object
+            dataType: 'json', // what type of data do we expect back from the server
+            encode: true,
+            complete: function () {},
+            success: function (msg) {
+                alert("YOUR SUCCESS MESSAGE HERE");
+                document.getElementById("contactForm").reset()
+
+            },
+            error: function (msg) {
+
+                alert("Error " + msg.d.toString());
+            }
+        })
+
+
+    });
+</script>
+
+{% endblock  %}

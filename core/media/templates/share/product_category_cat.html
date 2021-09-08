@@ -1,0 +1,15 @@
+<aside class="left_widgets p_filter_widgets">
+    <div class="l_w_title">
+        <h3>Browse Categories</h3>
+    </div>
+    {% for cat in category %}
+    <div class="widgets_inner">
+        <ul class="list">
+            <li>
+                <a href="#">{{cat.title}}</a>
+                <span>{{cat.count}}</span>
+            </li>
+        </ul>
+    </div>
+    {% endfor %}
+</aside>

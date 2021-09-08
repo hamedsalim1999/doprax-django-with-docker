@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+
+
+  resume:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/resume
+      - resume_static_volume:/core/media/static
+      - resume_files_volume:/core/media/upload/files
+    restart: always
+    ports:
+      - "80:8000"
+    networks:
+      - resume_network
+      - nginx_network
+    depends_on:
+      - resume_postgresql
+
+
+  resume_postgresql:
+    image: postgres:10
+    container_name: resume_postgresql
+    volumes:
+      - resume_postgresql:/var/lib/postgresql/data
+    restart: always
+    env_file: .env
+    ports:
+      - "5432:5432"
+    networks:
+      - resume_network
+
+volumes:
+  resume_postgresql:
+    external: true
+  resume_static_volume:
+    external: true
+  resume_files_volume:
+    external: true
+
+
+networks:
+  resume_network:
+    external: true
+  nginx_network:
+    external: true
