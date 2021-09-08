@@ -1,1 +1,0 @@
-# doprax-django-with-docker
